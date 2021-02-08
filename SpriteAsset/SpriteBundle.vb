@@ -279,6 +279,7 @@ Public Class SpriteBundle
                     sesh.Clear(New Vector4(0, 0, 0, 0))
                     Dim nearby = t.PropertyName.Split(":")
                     sesh.DrawImage(Neighbor_Base)
+                    Dim overlayCount As Integer = 0
                     For i = 0 To t.AssignmentName().Length - 1
                         Dim dir As String = t.AssignmentName()(i) + ""
                         ' guaranteed to be a valid number
@@ -292,12 +293,15 @@ Public Class SpriteBundle
                         Dim nbit = Neighbor_Assignments(clas)
                         Dim overlay = nbit.Retrieve(direc)
                         sesh.DrawImage(overlay)
+                        overlayCount += 1
                     Next
                     ' finalize the drawing into n_result
                     sesh.Dispose()
                     ' the assumption here is that n_result is a unique bitmap
                     ' to Neighbor_base and won't affect it
                     t.N_Result.CopyPixelsFromBitmap(t.N_Target)
+                    ' check reduction candidacy; if no overlays, is candidate.
+                    t.N_ReductionCandidate = (overlayCount = 0)
                 End If
                 Return t.N_Result
             Case Else
@@ -309,6 +313,8 @@ End Class
 
 ''' <summary>
 ''' A timeline of images that describes a single CLASS:VARIANT's assigned animation name.
+''' Considered a Write-Only class; once an image+duration is added, it cannot be removed.
+''' Retrieve the next image based on total time passed with Retrieve().
 ''' </summary>
 Public Class AnimationSequence
     Public Name As String
@@ -323,6 +329,7 @@ Public Class AnimationSequence
         DurationsMS.Add(durationMS)
         LengthMS += durationMS
     End Sub
+    ''' <param name="elapsedMS">The amount of time accrued within a Token.</param>
     Public Function Retrieve(ByRef elapsedMS As Double) As CanvasBitmap
         elapsedMS = elapsedMS Mod LengthMS
         Dim sum As Double = 0
@@ -341,7 +348,7 @@ End Class
 ''' <summary>
 ''' A class that returns a stored CanvasBitmap overlay associated with a single,
 ''' specific class based on a given direction. The overlay should be drawn atop
-''' a base image.
+''' a base image. Retrieve an overlay bitmap via Retrieve().
 ''' </summary>
 Public Class NeighborOverlayBitmap
     Private RenderTarget As CanvasRenderTarget

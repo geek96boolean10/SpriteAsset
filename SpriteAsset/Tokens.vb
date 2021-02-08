@@ -96,6 +96,16 @@ Public Class Token
     ''' </summary>
     Public N_Result As CanvasBitmap
     ''' <summary>
+    ''' When this token is applied, the SpriteBundle detects if it has any overlays.
+    ''' If this value is True, that is an indication that no overlays exist that
+    ''' match this Token's most recent neighbor selection. This means you can free up
+    ''' memory by reducing this Token - however, SpriteBundle will not un-reduce the
+    ''' Token if new overlays are required; you are expected to make the method call yourself.
+    ''' If you know that this sprite and its neighbors will not be changing Class/Variant names,
+    ''' you can safely reduce a candidate.
+    ''' </summary>
+    Public N_ReductionCandidate As Boolean = False
+    ''' <summary>
     ''' Changes the selector based on context. Give the name of the class 
     ''' or some other identifying string for each direction.
     ''' Pass an empty string to ignore a direction.
@@ -106,7 +116,8 @@ Public Class Token
                         west As String,
                         north As String,
                         south As String)
-        If Source.Type <> MultiType.Neighbor Then Throw New Exception($"N_ selector can't be used on {Source.Type.ToString()} source")
+        If Source.Type <> MultiType.Neighbor Then Throw New Exception(
+            $"N_ selector can't be used on {Source.Type.ToString()} source")
         Dim assign As String = ""
         Dim proprt As String = ""
         If north <> "" Then
@@ -131,10 +142,12 @@ Public Class Token
     End Sub
 
     ''' <summary>
-    ''' If True, then this Neighbor sprite assumes it will never have to draw an overlay.
+    ''' If True, then this Neighbor sprite assumes it will never have to draw another overlay.
     ''' This saves resources, but requires a N_Reduce(False) call to re-enable overlays, and
-    ''' may cause significant lag if many sprites attempt to enable overlays at once. After
-    ''' reduction, Token automatically reapplies itself to retrieve an updated image.
+    ''' may cause significant lag if many sprites attempt to enable overlays at once. 
+    ''' The stored image within N_Result is kept when you Reduce this token; however, when you
+    ''' un-Reduce it, the token automatically reapplies itself to retrieve a new image. Ensure
+    ''' that the selector is up-to-date before un-reducing.
     ''' </summary>
     Public Sub N_Reduce(reduce As Boolean)
         If reduce Then
