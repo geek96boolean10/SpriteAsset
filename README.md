@@ -20,4 +20,6 @@ This is a functional work-in-progress, hence the lack of an official Windows Sto
 
 # Usage
 
-Pending Codeproject article.
+See the READMEs for each project for light reading on their usages.
+
+For more information, please see (pending Codeproject article).
