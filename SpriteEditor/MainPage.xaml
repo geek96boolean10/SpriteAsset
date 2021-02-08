@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="SpriteEditor.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SpriteEditor"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="#111111">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <Frame x:Name="Frame_" Grid.Row="0">
+
+        </Frame>
+        <StackPanel Orientation="Horizontal" Grid.Row="1"
+                    Background="#ababab">
+            <AppBarButton x:Name="ButtonBoundsEditor"
+                Click="ButtonBoundsEditor_Click"
+                Icon="Crop"
+                Label="Bounds Editor"
+                />
+            <AppBarButton x:Name="ButtonSpriteEditor"
+                Click="ButtonSpriteEditor_Click"
+                Icon="Caption"
+                Label="Sprite Editor"
+                />
+            <AppBarButton
+                Click="SaveSheet"
+                Icon="Save"
+                Label="Save Progress"
+                 />
+            <AppBarButton
+                Click="LoadBitmap"
+                Icon="OpenFile"
+                Label="Load&#x0a;Sprite"
+                 />
+            <AppBarButton x:Name="ButtonSwap"
+                IsEnabled="False"
+                Click="SwapBitmap"
+                Icon="Switch"
+                Label="Swap&#x0a;Image"
+                 />
+            <AppBarSeparator/>
+            <TextBlock x:Name="TextBoundCount"
+                       VerticalAlignment="Center">
+                ...
+            </TextBlock>
+            <AppBarSeparator/>
+            <SymbolIcon x:Name="SymbolUnsaved" Symbol="Edit" Margin="0,0,10,0" Opacity="0"/>
+            <TextBlock x:Name="TextUnsaved"
+                       VerticalAlignment="Center">
+                    Open an Image or a Complex file with Load Sprite.
+             </TextBlock>
+            </StackPanel>
+    </Grid>
+</Page>

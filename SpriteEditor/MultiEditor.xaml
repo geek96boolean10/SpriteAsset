@@ -1,0 +1,183 @@
+﻿<Page
+    x:Class="SpriteEditor.MultiEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SpriteEditor"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid
+        Background="#222222">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Name="LeftSpritesGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Foreground="White" FontSize="40" Margin="15,0,0,0">
+                Sprites
+            </TextBlock>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="ButtonAddSprite"
+                    Grid.Column="0" Foreground="white"
+                    HorizontalAlignment="Stretch"
+                        >Add Sprite</Button>
+                <Button  x:Name="ButtonRemoveSprite"
+                         Click="ButtonRemoveSprite_Click"
+                    Grid.Column="1" Foreground="white"
+                    HorizontalAlignment="Stretch"
+                        >Remove Sprite</Button>
+            </Grid>
+            <ListView x:Name="SpritesList"
+                Grid.Row="2" BorderThickness="1"
+                      BorderBrush="Azure" SelectionMode="Single"></ListView>
+        </Grid>
+        <Grid Name="CenterKnownBoundsGrid"
+              Grid.Column="1" Background="#333333">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Foreground="White" FontSize="40" Margin="15,0,0,0">
+                Bounds
+            </TextBlock>
+            <Button x:Name="ButtonInsertSelected"
+                Grid.Row="1" Foreground="white"
+                HorizontalAlignment="Right"
+                    >Insert Selected</Button>
+            <ListView x:Name="BoundsList"
+                Grid.Row="2" BorderThickness="1"
+                      BorderBrush="Aqua" SelectionMode="Single"></ListView>
+        </Grid>
+        <Grid Name="RightSpriteEditorGrid"
+              Background="#444444"
+              Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBlock 
+                Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right"
+                FontSize="20" Foreground="White" Margin="0,0,20,0">
+                Assignment | Property
+            </TextBlock>
+            <ListView x:Name="AssignmentList"
+                Grid.Row="3" BorderThickness="1" SelectionMode="Single"
+                      BorderBrush="Bisque">
+            </ListView>
+            <Button x:Name="ButtonRemoveDetail"
+                    Click="ButtonRemoveDetail_Click"
+                    Grid.Row="1" HorizontalAlignment="Right" Foreground="white">
+                Remove Selected
+            </Button>
+
+            <Grid Name="EditorOptionsGrid"
+                 Grid.Column="1" Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock  Grid.Column="0"
+                Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                FontSize="20" Foreground="White" Margin="20,0,20,0">
+                Class Identifier:
+                </TextBlock>
+                <TextBox  x:Name="TextboxClass"
+                         Grid.Column="0"
+                        Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                        FontSize="20" Foreground="White" Margin="40,0,10,0" 
+                          TextChanged="DetailNameChanged"
+                      TextAlignment="Left"
+                      Text="Object"></TextBox>
+
+                <TextBlock  Grid.Column="0"
+                Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left"
+                FontSize="20" Foreground="White" Margin="20,0,20,0">
+                (Variant Identifier):
+                </TextBlock>
+                <TextBox  x:Name="TextboxVariant"
+                         Grid.Column="0"
+                        Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                        FontSize="20" Foreground="White" Margin="40,0,10,0" 
+                          TextChanged="DetailNameChanged"
+                      TextAlignment="Left"
+                      Text=""></TextBox>
+
+                <StackPanel Background="#40000000" Grid.Column="0" Grid.Row="4" Margin="10,10,10,10">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
+                        FontSize="20" Foreground="White" Margin="10,0,10,0">
+                        MultiSprite Type
+                    </TextBlock>
+                    <RadioButton x:Name="RadioSingle"
+                        Foreground="White"  VerticalContentAlignment="Center"
+                                  FontSize="20" Margin="10,0,10,0"
+                                 Checked="TypeChanged">
+                        <TextBlock Margin="0,-10,0,0">Single</TextBlock>
+                    </RadioButton>
+                    <RadioButton  x:Name="RadioDirection"
+                        Foreground="White"  VerticalContentAlignment="Center"
+                                  FontSize="20" Margin="10,0,10,0"
+                                 Checked="TypeChanged">
+                        <TextBlock Margin="0,-10,0,0">Directional</TextBlock>
+                    </RadioButton>
+                    <RadioButton  x:Name="RadioNeighbor"
+                        Foreground="White"  VerticalContentAlignment="Center"
+                                  FontSize="20" Margin="10,0,10,0"
+                                 Checked="TypeChanged">
+                        <TextBlock Margin="0,-10,0,0">Neighbor</TextBlock>
+                    </RadioButton>
+                    <RadioButton  x:Name="RadioAnimated"
+                        Foreground="White"  VerticalContentAlignment="Center"
+                                  FontSize="20" Margin="10,0,10,0"
+                                 Checked="TypeChanged">
+                        <TextBlock Margin="0,-10,0,0">Animated</TextBlock>
+                    </RadioButton>
+
+                </StackPanel>
+
+                <ScrollViewer Grid.Column="0" Grid.Row="5" Margin="10,10,10,10"
+                              HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+                <StackPanel Background="#40000000" >
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
+                        FontSize="20" Foreground="White" Margin="10,0,10,20" FontStyle="Italic">
+                        MultiSprite Type Description
+                    </TextBlock>
+                    <TextBlock x:Name="TextTypeDescriptor"
+                            TextWrapping="WrapWholeWords"
+                            HorizontalAlignment="Left"
+                            FontSize="20" Foreground="White" Margin="10,0,10,0">
+                    Lorem ipsum dolor sit amet.
+                    </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
