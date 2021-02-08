@@ -14,6 +14,10 @@ These projects requires the following nuget packages:
 
 These projects require Windows 10. The editor is a UWP app, so it cannot run on Windows 7 or 8.
 
+# Readiness
+
+This is a functional work-in-progress, hence the lack of an official Windows Store app. While I expect to be making updates and changes, the functionality within the SpriteAsset library should be solid enough that future updates will not break them. 
+
 # Usage
 
 Pending Codeproject article.
