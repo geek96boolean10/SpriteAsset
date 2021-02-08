@@ -4,7 +4,11 @@ When building a 2D game in UWP, the Win2D API is useful to access hardware-accel
 
 # Installation
 
-In order to avoid certificates, signing, and other publishing bothers, I've opted to upload the entire Editor's project here. Simply build a Debug or Release version on your own machine to install the app. You can then run the app anytime from your start menu under Sprite Editor.
+You can examine and download the sideloadable app package from my DropBox here (58 MB): https://www.dropbox.com/s/sqzzkrey3hjaoxq/SpriteEditor_0.1.0.0_Sideload.zip?dl=0
+
+After downloading the zip file, you'll need to either run the Install.ps1 PowerShell Script or manually install the certificate and app bundle. 
+
+If you want to avoid the risks and bother of sideloading an app, I've uploaded the entire Editor's project here - simply build a Debug or Release version on your own machine to install the app. You can then run the app anytime from your start menu under Sprite Editor.
 
 # Dependencies
 
