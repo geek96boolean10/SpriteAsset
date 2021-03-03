@@ -92,6 +92,7 @@ Public NotInheritable Class MultiEditor
         CurrentSelectedSprite.WhichIsNew = index
         LoadMSBData()
         AssignmentList.SelectedIndex = index ' select what we just made
+        AssignmentList.ScrollIntoView(AssignmentList.SelectedItem)
     End Sub
 
     Private Sub ButtonAddSprite_Click(sender As Object, e As RoutedEventArgs) Handles ButtonAddSprite.Click

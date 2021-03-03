@@ -6,8 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="80" d:MinHeight="80"
-    d:DesignWidth="360" d:MinWidth="360">
+    d:DesignHeight="80" d:MinHeight="80" d:MaxHeight="80"
+    d:DesignWidth="360" d:MinWidth="360" d:MaxWidth="360">
 
     <Border
         BorderThickness="2"
@@ -25,7 +25,7 @@
             <Image x:Name="Thumb" x:FieldModifier="Public"
                    Grid.Row="0"
                    Grid.RowSpan="2"
-                    Stretch="Uniform"></Image>
+                    Stretch="Uniform" MaxHeight="80" Width="80"></Image>
             <Border Grid.Column="1"
                 Background="#80333333">
                 <TextBlock x:Name="TextBoundID" x:FieldModifier="Public"
