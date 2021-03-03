@@ -17,6 +17,11 @@ Public MustInherit Class Sprite
     ''' </summary>
     Public MustOverride Property Image As CanvasBitmap
     ''' <summary>
+    ''' A value from 0.0 to 1.0 determining the opacity of the sprite when a SpriteLayer draws it.
+    ''' Default is 1.
+    ''' </summary>
+    Public Property Opacity As Single = 1
+    ''' <summary>
     ''' Retrieves the Clickable link, if any. Returns null if
     ''' the sprite is not selectable.
     ''' </summary>
@@ -56,6 +61,9 @@ Public Class Clickable
     ''' Note that this means the clicked event is not fired for this object.
     ''' Pass in Nothing if a particular button press should be ignored.
     ''' </summary>
+    ''' <param name="Bound">The bounds of the screen that should trigger this Clickable.
+    ''' When used with an ESprite, the Bounds are automatically updated with the sprite
+    ''' location.</param>
     Public Sub New(Bound As Rect, LeftAction As Action, RightAction As Action)
         AlertMode = ClickAlertMode.Action
         ClickBounds = Bound
@@ -67,6 +75,9 @@ Public Class Clickable
     ''' Creates a clickable that uses a certain alert mode. Note that you cannot
     ''' use this constructor to create an Action-based alert mode.
     ''' </summary>
+    ''' <param name="Bound">The bounds of the screen that should trigger this Clickable.
+    ''' When used with an ESprite, the Bounds are automatically updated with the sprite
+    ''' location.</param>
     Public Sub New(Bound As Rect, Mode As ClickAlertMode)
         If Mode = ClickAlertMode.Action Then
             Throw New Exception("Don't create a clickable by specifying the Action mode - use the other constructor instead.")
@@ -78,6 +89,7 @@ Public Class Clickable
     ''' Notifies this clickable that it has been clicked.
     ''' Returns true if the action has been handled; false to continue searching
     ''' for another Clickable.
+    ''' In Action mode, the click is considered ignored if no handler is attached.
     ''' </summary>
     Public Function Click(button As MouseButton) As Boolean
         Select Case AlertMode
@@ -127,4 +139,11 @@ Public Class Clickable
         Left
         Right
     End Enum
+
+    ''' <summary>
+    ''' A static clickable that Halts any incoming clicks. This cannot be changed.
+    ''' Use for any controls that should cause modal behavior or block clicks from passing through.
+    ''' </summary>
+    Public Shared Opaque As New Clickable(Nothing, ClickAlertMode.Halt)
+
 End Class

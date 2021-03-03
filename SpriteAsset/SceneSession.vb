@@ -140,7 +140,8 @@ Public Class SceneSession
 
     Public Enum DefaultLayers
         SpaceTiles = 0
-        UI = 100
+        UI = 1000
+        Cursor = 2000
     End Enum
 End Class
 
@@ -149,7 +150,9 @@ End Class
 ''' as to how it should be rendered onto the final scene. Click bounds can be enabled.
 ''' </summary>
 Public Class SingleLayer
-
+    ''' <summary>
+    ''' The offset that this layer requests when being drawn to the main session.
+    ''' </summary>
     Public Offset As Vector2
     Protected RenderTarget As CanvasRenderTarget
     Protected DrawingSession As CanvasDrawingSession
@@ -195,7 +198,7 @@ Public Class SingleLayer
     End Sub
 
     ''' <summary>
-    ''' Must be called each frame, prior to painting this layer, to commit
+    ''' Must be called each frame, prior to painting this layer to screen, to commit
     ''' the session changes to the render target.
     ''' Forces the creation of a new DrawingSession after first Disposing
     ''' of the previous instance.
@@ -275,7 +278,7 @@ Public Class SingleLayer
     ''' Attempts to find a Clickable boundary that corresponds to the primary session's
     ''' coordinates. Returns True if a clickable has responded.
     ''' </summary>
-    Public Function TryClick(point As Vector2, button As Clickable.MouseButton) As Boolean
+    Public Overridable Function TryClick(point As Vector2, button As Clickable.MouseButton) As Boolean
         If Not Clickable Then Return False
         For Each cl In ClickBounds
             If cl.ClickBounds.Contains(point.ToPoint) Then

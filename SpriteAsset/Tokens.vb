@@ -28,6 +28,15 @@ Public Class Token
             Return _PropertyName
         End Get
     End Property
+    ''' <summary>
+    ''' Equivalent to Token.Source.ApplyToken(Token). Retrieves the selected image by the Token
+    ''' from its SpriteBundle.
+    ''' </summary>
+    Public ReadOnly Property Result As CanvasBitmap
+        Get
+            Return Me.Source.ApplyToken(Me)
+        End Get
+    End Property
 
     Public Sub New(source As SpriteBundle)
         Me.Source = source
